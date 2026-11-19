@@ -3,11 +3,11 @@ const usuarios = [
     { id: 2, nome: "Maria", idade: 30 }
 ];
 
-export function listarUsuarios() {
+export function listarUsuariosService() {
     return usuarios;
 }
 
-export function cadastrarUsuario(nome,idade) {
+export function cadastrarUsuarioService(nome,idade) {
     const novoUsuario = {
         id: usuarios.length +1,
         nome: nome,
@@ -17,4 +17,10 @@ export function cadastrarUsuario(nome,idade) {
     usuarios.push(novoUsuario)
 
     return novoUsuario;
+}
+
+export function buscarPorIdService(id) {
+    const usuario = usuarios.find(usuario => usuario.id === id)
+
+    return usuario;
 }

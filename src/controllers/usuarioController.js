@@ -1,12 +1,16 @@
-import { cadastrarUsuario, listarUsuarios } from "../services/usuarioService.js";
+import { 
+    listarUsuariosService,
+    cadastrarUsuarioService,
+    buscarPorIdService
+ } from "../services/usuarioService.js";
 
-export function buscarUsuarios(req, res) {
-    const usuarios = listarUsuarios();
+export function listarUsuariosController(req, res) {
+    const usuarios = listarUsuariosService();
 
     res.status(200).json(usuarios);
 }
 
-export function criaUsuario(req, res) {
+export function cadastrarUsuarioController(req, res) {
     const {nome, idade} = req.body
 
     if(!nome || !Number.isInteger(idade) || idade < 18) {
@@ -15,8 +19,21 @@ export function criaUsuario(req, res) {
         })
     }
 
-    const usuario = cadastrarUsuario(nome, idade)
+    const usuario = cadastrarUsuarioService(nome, idade)
 
     return res.status(201).json(usuario)
 }
 
+export function buscarPorIdController(req, res) {
+    const id = Number(req.params.id)
+
+    if(!id || id === null || !Number.isInteger(id)){
+        return res.status(400).json({
+            mensagem: "Não pode ser vazio ou nulo e deve ser um numero inteiro"
+        })
+    }
+
+    const usuario = buscarPorIdService(id)
+
+    return res.status(200).json(usuario)
+}
