@@ -24,3 +24,14 @@ export function buscarPorIdService(id) {
 
     return usuario;
 }
+
+export function excluirUsuarioService(id) {
+    const indice = usuarios.findIndex(usuario => usuario.id === id)
+    if(indice === -1) {
+        return null
+    }
+
+    const resultado = usuarios.splice(indice, 1)
+
+    return resultado[0];
+}

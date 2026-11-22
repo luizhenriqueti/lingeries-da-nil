@@ -1,7 +1,8 @@
 import { 
     listarUsuariosService,
     cadastrarUsuarioService,
-    buscarPorIdService
+    buscarPorIdService,
+    excluirUsuarioService
  } from "../services/usuarioService.js";
 
 export function listarUsuariosController(req, res) {
@@ -27,7 +28,7 @@ export function cadastrarUsuarioController(req, res) {
 export function buscarPorIdController(req, res) {
     const id = Number(req.params.id)
 
-    if(!id || id === null || !Number.isInteger(id)){
+    if(!id || id <= 0 || !Number.isInteger(id)){
         return res.status(400).json({
             mensagem: "Não pode ser vazio ou nulo e deve ser um numero inteiro"
         })
@@ -36,4 +37,21 @@ export function buscarPorIdController(req, res) {
     const usuario = buscarPorIdService(id)
 
     return res.status(200).json(usuario)
+}
+
+export function excluirUsuarioController(req, res) {
+    const id = Number(req.params.id)
+
+    if(!id || !Number.isInteger(id) || id <= 0){
+        return res.status(400).json({
+            mensagem: "Não pode ser vazio ou nulo e deve ser um numero inteiro"
+        })
+    }
+
+    const retorno = excluirUsuarioService(id)
+
+    return res.status(200).json({
+        mensagem: retorno
+    })
+
 }
